@@ -1,4 +1,4 @@
-Sure! Here's the translated README in English:
+Deploy project! https://practicewithcrud.netlify.app/
 
 🗂️ Contact Agenda
 A simple web application that lets you create, read, update, and delete (CRUD) contacts. Built with HTML, CSS, JavaScript, and Bootstrap 5.
@@ -30,6 +30,7 @@ A simple web application that lets you create, read, update, and delete (CRUD) c
 - Clone the repository
 - Open index.html in your browser
 - Use the interface to manage your contacts
+
 ✨ Author
 Created by Pablo Germán Jiménez
 Design inspired by 💥 hip-hop vibes from Bboy Linkin
