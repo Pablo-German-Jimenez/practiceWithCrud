@@ -25,7 +25,7 @@ export default class Contact {
     hobbies,
     superpoder
   ) {
-    this.#id = id;
+    this.#id = crypto.randomUUID();
     this.#name = name;
     this.#surname = surname;
     this.#phone = phone;
