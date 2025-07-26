@@ -1,4 +1,4 @@
-class Contact {
+export default class Contact {
   #id;
   #name;
   #surname;
@@ -25,7 +25,7 @@ class Contact {
     hobbies,
     superpoder
   ) {
-    this.#id = id;
+    this.#id = crypto.randomUUID();
     this.#name = name;
     this.#surname = surname;
     this.#phone = phone;
