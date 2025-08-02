@@ -46,7 +46,7 @@ const dibujarFilas = (itemContacto, indice) => {
             </td>
             <td><div class="btn-group" role="group" aria-label="Basic mixed styles example">
   <button type="button" class="btn btn-danger my-1 mx-1"><i class="bi bi-trash" onClick="deleteContact('${itemContacto.id}')"></i></button>
-  <button type="button" class="btn btn-warning my-1 mx-1"><i class="bi bi-pencil-square"></i></button>
+  <button type="button" class="btn btn-warning my-1 mx-1"><i class="bi bi-pencil-square" onClick="editContact('${itemContacto.id}')"></i></button>
   <button type="button" class="btn btn-primary my-1 mx-1"><i class="bi bi-eye "></i></button>
 </div></td>
             
@@ -111,6 +111,8 @@ window.deleteContact = (id) => {
       //tablaContactoBody.innerHTML = ""; //limpio el tbody
       //cargarContactos(); //vuelvo a cargar los contactos    
       tablaContactoBody.children[indexContact].remove() //limpio el tbody
+      // actualizar el numero de filas
+      for (let i = indexContact; i < tablaContactoBody.children.length; i++)  
       saveLocalStorage()
        
       
@@ -123,6 +125,10 @@ window.deleteContact = (id) => {
     
   });
 };
+//function edit contact
+window.editContact = (id) => {
+    console.log(`Edit contact with id: ${id}`);
+}
 
 //event handlers
 const formContact = document.querySelector("#addContactForm");
