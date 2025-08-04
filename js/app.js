@@ -102,8 +102,7 @@ window.deleteContact = (id) => {
     cancelButtonColor: "#d33",
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
-    console.log(result);
-
+    
     if (result.isConfirmed) {
       //aqui agrego la logica para borrar
       //tengo que buscar en que posicion esta el contacto
@@ -130,7 +129,7 @@ window.deleteContact = (id) => {
 
 //function edit contact
 window.prepareContact = (id) => {
-  //acomodar titulo del formulario de add contact a editar
+  // update title of form add contact to edit title
   const contactEdit = agenda.find((contact) => contact.id === id);
   name.value = contactEdit.name;
   surname.value = contactEdit.surname;
@@ -150,9 +149,27 @@ window.prepareContact = (id) => {
   editContact(idContact); // call the editContact function with the id of the contact to be edited
 };
 
-const editContact = () => {
+const editContact = (id) => {
   const contactEdit = agenda.findIndex((contact) => contact.id === idContact);
+ if(contactEdit!==-1){
+  agenda[contactEdit].name = name.value;
+  agenda[contactEdit].surname = surname.value;
+  agenda[contactEdit].phone = phone.value;
+  agenda[contactEdit].email = email.value;
+  agenda[contactEdit].img = img.value;
+  agenda[contactEdit].company = company.value;
+  agenda[contactEdit].jobtitle = jobtitle.value;
+  agenda[contactEdit].address = address.value;
+  agenda[contactEdit].notes = notes.value;  
+  agenda[contactEdit].hobbies = hobbies.value;
+  agenda[contactEdit].superpoder = superpoder.value;
 
+  saveLocalStorage();
+  tablaContactoBody.innerHTML = "";
+  cargarContactos();
+  modal.hide()
+ 
+ }
 };
 
 //event handlers
@@ -170,7 +187,7 @@ formContact.addEventListener("submit", (e) => {
     // if buildingContact is true, create a new contact
     createContact();
   } else {
-    editContact();
+    editContact(); // if buildingContact is false, edit the existing contact
   }
 });
 cargarContactos();
