@@ -19,6 +19,8 @@ const notes = document.getElementById("notes");
 const hobbies = document.getElementById("hobbies");
 const superpoder = document.getElementById("superpoder");
 const tablaContactoBody = document.getElementById("tablaContactoBody");
+let buildingContact = true;
+let idContact = null;
 
 const agenda = JSON.parse(localStorage.getItem("agenda")) || []; // si no hay nada en local storage, crea un array vacio
 
@@ -30,7 +32,9 @@ const cargarContactos = () => {
       dibujarFilas(itemContacto, indice + 1)
     );
   }
-}; //draw rows in table
+};
+
+//draw rows in table
 const dibujarFilas = (itemContacto, indice) => {
   tablaContactoBody.innerHTML += `
    <tr>
@@ -46,7 +50,7 @@ const dibujarFilas = (itemContacto, indice) => {
             </td>
             <td><div class="btn-group" role="group" aria-label="Basic mixed styles example">
   <button type="button" class="btn btn-danger my-1 mx-1"><i class="bi bi-trash" onClick="deleteContact('${itemContacto.id}')"></i></button>
-  <button type="button" class="btn btn-warning my-1 mx-1"><i class="bi bi-pencil-square" onClick="editContact('${itemContacto.id}')"></i></button>
+  <button type="button" class="btn btn-warning my-1 mx-1"><i class="bi bi-pencil-square" onClick="prepareContact('${itemContacto.id}')"></i></button>
   <button type="button" class="btn btn-primary my-1 mx-1"><i class="bi bi-eye "></i></button>
 </div></td>
             
@@ -98,46 +102,75 @@ window.deleteContact = (id) => {
     cancelButtonColor: "#d33",
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
-    console.log(result)
-    
+    console.log(result);
+
     if (result.isConfirmed) {
       //aqui agrego la logica para borrar
       //tengo que buscar en que posicion esta el contacto
-      const indexContact = agenda.findIndex((contact)=> contact.id === id)
+      const indexContact = agenda.findIndex((contact) => contact.id === id);
       //console.log(indexContact)
       //con splice borramos el elemento de  determinada posicion del array
-      agenda.splice(indexContact,1);
+      agenda.splice(indexContact, 1);
       //actualizo el local storage
       //tablaContactoBody.innerHTML = ""; //limpio el tbody
-      //cargarContactos(); //vuelvo a cargar los contactos    
-      tablaContactoBody.children[indexContact].remove() //limpio el tbody
+      //cargarContactos(); //vuelvo a cargar los contactos
+      tablaContactoBody.children[indexContact].remove(); //limpio el tbody
       // actualizar el numero de filas
-      for (let i = indexContact; i < tablaContactoBody.children.length; i++)  
-      saveLocalStorage()
-       
-      
+      for (let i = indexContact; i < tablaContactoBody.children.length; i++)
+        saveLocalStorage();
+
       Swal.fire({
         title: "Deleted!",
         text: "Your contact has been deleted.",
         icon: "success",
       });
     }
-    
   });
 };
+
 //function edit contact
-window.editContact = (id) => {
-    console.log(`Edit contact with id: ${id}`);
-}
+window.prepareContact = (id) => {
+  //acomodar titulo del formulario de add contact a editar
+  const contactEdit = agenda.find((contact) => contact.id === id);
+  name.value = contactEdit.name;
+  surname.value = contactEdit.surname;
+  phone.value = contactEdit.phone;
+  email.value = contactEdit.email;
+  img.value = contactEdit.img;
+  company.value = contactEdit.company;
+  jobtitle.value = contactEdit.jobtitle;
+  address.value = contactEdit.address;
+  notes.value = contactEdit.notes;
+  hobbies.value = contactEdit.hobbies;
+  superpoder.value = contactEdit.superpoder;
+  idContact = id;
+  buildingContact = false; // set the flag to indicate that we are editing an existing contact
+
+  modal.show();
+  editContact(idContact); // call the editContact function with the id of the contact to be edited
+};
+
+const editContact = () => {
+  const contactEdit = agenda.findIndex((contact) => contact.id === idContact);
+
+};
 
 //event handlers
+
+btnModal.addEventListener("click", () => {
+  formContact.reset();
+  buildingContact = true; // reset the flag to indicate a new contact is being built
+  modal.show();
+}); // TERCERO escucha click en btnModal y muestra el contenido del modal tomado desde el dom por id por addContactModalLabel y muestra contenido div
+
 const formContact = document.querySelector("#addContactForm");
 formContact.addEventListener("submit", (e) => {
   e.preventDefault();
-  createContact();
+  if (buildingContact) {
+    // if buildingContact is true, create a new contact
+    createContact();
+  } else {
+    editContact();
+  }
 });
 cargarContactos();
-
-btnModal.addEventListener("click", () => {
-  modal.show();
-}); // TERCERO escucha click en btnModal y muestra el contenido del modal tomado desde el dom por id por addContactModalLabel y muestra contenido div
