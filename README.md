@@ -1,14 +1,15 @@
-Deploy project! https://practicewithcrud.netlify.app/
+Deploy project! [https://personaltaskone.netlify.app/](https://personaltaskone.netlify.app/)
 
-🗂️ Contact Agenda
-A simple web application that lets you create, read, update, and delete (CRUD) contacts. Built with HTML, CSS, JavaScript, and Bootstrap 5.
-🚀 Features
+🗂️ Todo List!
+A simple web application that lets you create, read, update, and delete (CRUD) tasks. Built with HTML, CSS, JavaScript, and Bootstrap 5.
+
+🚀 Features:
 - 📋 Responsive contact list table
-- ➕ Modal to add new contacts
 - ✏️ Edit contact information
 - ❌ Delete contacts
 - 🧠 Uses localStorage for data persistence (optional)
 - 🎨 Modern interface with Bootstrap and icons
+
 📦 Technologies Used
 - HTML5
 - CSS3 + Bootstrap 5
@@ -40,4 +41,4 @@ Design inspired by 💥 hip-hop vibes from Bboy Linkin
 
 #💥 Breaker-boy for ever🎵 
 
- ![🔥#Bboys on fire 🎵 ](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMm85NWFzNDJmOXpsYjdrYWFjZjdmZHk0ZHI2ODJzc3Y4ejBkaXBzOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/npxXYT77DaRji/giphy.gif)
+ ![🔥#Bboys on fire 🎵 ](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeG11M2dtOHdnYWUxN3N6NTFoZ2t5Z24xcmV5djJjcjI4ODlyZ3duZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ANFZtmUiXncuUmKMwY/giphy.gif)
