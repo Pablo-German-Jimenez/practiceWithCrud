@@ -107,15 +107,18 @@ window.deleteContact = (id) => {
       //aqui agrego la logica para borrar
       //tengo que buscar en que posicion esta el contacto
       const indexContact = agenda.findIndex((contact) => contact.id === id);
-      //console.log(indexContact)
+      console.log(indexContact)
+      
       //con splice borramos el elemento de  determinada posicion del array
       agenda.splice(indexContact, 1);
+      
       //actualizo el local storage
-      //tablaContactoBody.innerHTML = ""; //limpio el tbody
+      //tablaContactoBody.innerHTML = ""; //limpio todo el tbody y sus hijos
       //cargarContactos(); //vuelvo a cargar los contactos
+      
       tablaContactoBody.children[indexContact].remove(); //limpio el tbody
       // actualizar el numero de filas
-      for (let i = indexContact; i < tablaContactoBody.children.length; i++)
+      //for (let i = indexContact; i < tablaContactoBody.children.length; i++)
         saveLocalStorage();
 
       Swal.fire({
@@ -149,9 +152,10 @@ window.prepareContact = (id) => {
   editContact(idContact); // call the editContact function with the id of the contact to be edited
 };
 
-const editContact = (id) => {
+const editContact = () => {
   const contactEdit = agenda.findIndex((contact) => contact.id === idContact);
  if(contactEdit!==-1){
+  //modificar contacto
   agenda[contactEdit].name = name.value;
   agenda[contactEdit].surname = surname.value;
   agenda[contactEdit].phone = phone.value;
@@ -163,10 +167,12 @@ const editContact = (id) => {
   agenda[contactEdit].notes = notes.value;  
   agenda[contactEdit].hobbies = hobbies.value;
   agenda[contactEdit].superpoder = superpoder.value;
-
+//update localstorage
   saveLocalStorage();
-  tablaContactoBody.innerHTML = "";
-  cargarContactos();
+  //actualizar fila de la tabla
+  const filaEditada = tablaContactoBody.children[contactEdit];
+  console.log(filaEditada)
+  
   modal.hide()
  
  }
