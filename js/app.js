@@ -17,8 +17,8 @@ const company = document.getElementById("company");
 const jobtitle = document.getElementById("jobtitle");
 const address = document.getElementById("address");
 const notes = document.getElementById("notes");
-const hobbies = document.getElementById("hobbies");
-const superpoder = document.getElementById("superpoder");
+const hobbies = document.getElementById("talents");
+const superpoder = document.getElementById("superpowers");
 const tablaContactoBody = document.getElementById("tablaContactoBody");
 let buildingContact = true;
 let idContact = null;
@@ -31,7 +31,7 @@ const cargarContactos = (id) => {
   if (agenda.length !== 0) {
     agenda.map((itemContacto, id) => dibujarFilas(itemContacto, id + 1));
   }
-  console.log(id);
+  
 };
 
 //draw rows in table
@@ -66,6 +66,8 @@ const saveLocalStorage = () => {
 //function create contact
 const createContact = () => {
   //search data of form and create a object contact
+  if(validations()){
+
   const contactNew = new Contact(
     name.value,
     surname.value,
@@ -93,6 +95,9 @@ const createContact = () => {
   });
   formContact.reset();
   dibujarFilas(contactNew, agenda.length);
+  }else {
+   console.log(`There are errors without valid!`)
+  }
 };
 // function delete contact
 window.deleteContact = (id) => {
@@ -186,7 +191,11 @@ const editContact = () => {
 };
 //validations
 const validations = () => {
-  validateAmountCaracters(name,2,50)
+  let validatedData  = true
+  if(!validateAmountCaracters(name,2,50)){
+    validatedData = false
+  }
+  return validatedData;
 };
 
 //event handlers

@@ -88,14 +88,20 @@
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="addContactForm">
+            <form id="addContactForm" novalidate>
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name">
+                  <input type="text" class="form-control" id="name"  name="name" autocomplete="name">
+                  <div class="invalid-feedback">
+                    Please enter a valid name bro!(between 2 char to 50chars)
+                  </div>
+                  <div class="valid-feedback">
+                      Sooo ! animall! xD
+                  </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="lastName" class="form-label">Surname</label>
+                  <label for="lastname" class="form-label">Lastname</label>
                   <input type="text" class="form-control" id="lastname">
                 </div>
                 <div class="col-md-6 mb-3">
@@ -115,7 +121,7 @@
                   <input type="text" class="form-control" id="company">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="jobTitle" class="form-label">Job title</label>
+                  <label for="jobtitle" class="form-label">Job title</label>
                   <input type="text" class="form-control" id="jobtitle">
                 </div>
                 <div class="col-md-6 mb-3">
@@ -123,12 +129,12 @@
                   <input type="text" class="form-control" id="address">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="city" class="form-label">Hobbies</label>
-                  <input type="text" class="form-control" id="hobbies">
+                  <label for="talents" class="form-label">Talents!</label>
+                  <input type="text" class="form-control" id="talents">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="city" class="form-label">SuperPoder</label>
-                  <input type="text" class="form-control" id="superpoder">
+                  <label for="superpowers" class="form-label">Superpowers!</label>
+                  <input type="text" class="form-control" id="superpowers">
                 </div>
                 <div class="col-12 mb-3">
                   <label for="notes" class="form-label">Notes</label>
