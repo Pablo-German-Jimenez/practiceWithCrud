@@ -26,29 +26,31 @@ const agenda = JSON.parse(localStorage.getItem("agenda")) || []; // si no hay na
 
 //add contacts to table
 //if agenda has contacts, draw them in table
-const cargarContactos = () => {
+const cargarContactos = (id) => {
   if (agenda.length !== 0) {
-    agenda.map((itemContacto, indice) =>
-      dibujarFilas(itemContacto, indice + 1)
+    agenda.map((itemContacto, id) =>
+      dibujarFilas(itemContacto, id + 1)
     );
   }
+  console.log(id)
 };
 
 //draw rows in table
-const dibujarFilas = (itemContacto, indice) => {
+const dibujarFilas = (itemContacto, id) => {
   tablaContactoBody.innerHTML += `
    <tr>
-            <th scope="row">${indice}</th>
+            <th scope="row">${id}</th>
             <td>${itemContacto.name}</td>
             <td>${itemContacto.surname}</td>
             <td>${itemContacto.phone}</td>
             <td>${itemContacto.email}</td>
-            <td><img
+            <td>
+            <img
               src=${itemContacto.img}
               alt=${itemContacto.name}
-              class="img-thumbnail rounded-circle w-25 h-25">
+               >
             </td>
-            <td><div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <td ><div class="btn-group  " role="group" aria-label="Basic mixed styles example" >
   <button type="button" class="btn btn-danger my-1 mx-1"><i class="bi bi-trash" onClick="deleteContact('${itemContacto.id}')"></i></button>
   <button type="button" class="btn btn-warning my-1 mx-1"><i class="bi bi-pencil-square" onClick="prepareContact('${itemContacto.id}')"></i></button>
   <button type="button" class="btn btn-primary my-1 mx-1"><i class="bi bi-eye "></i></button>
@@ -70,7 +72,7 @@ const createContact = () => {
     surname.value,
     phone.value,
     email.value,
-    img.value,
+    img.value.length  !== 0 ? img.value: `https://i.pinimg.com/1200x/29/97/81/299781432e565934aa4c8943cae829fb.jpg`,
     company.value,
     jobtitle.value,
     address.value,
@@ -78,8 +80,9 @@ const createContact = () => {
     hobbies.value,
     superpoder.value
   );
+  //method push to array named agenda the contactNew values
   agenda.push(contactNew);
-  console.log(contactNew);
+  //save to local storage
   saveLocalStorage();
   Swal.fire({
     title: "Contact created!",
@@ -90,7 +93,6 @@ const createContact = () => {
   formContact.reset();
   dibujarFilas(contactNew, agenda.length);
 };
-
 // function delete contact
 window.deleteContact = (id) => {
   Swal.fire({
@@ -132,8 +134,9 @@ window.deleteContact = (id) => {
 
 //function edit contact
 window.prepareContact = (id) => {
-  // update title of form add contact to edit title
+  //TODO update title of form add contact to edit title 
   const contactEdit = agenda.find((contact) => contact.id === id);
+ 
   name.value = contactEdit.name;
   surname.value = contactEdit.surname;
   phone.value = contactEdit.phone;
@@ -146,13 +149,15 @@ window.prepareContact = (id) => {
   hobbies.value = contactEdit.hobbies;
   superpoder.value = contactEdit.superpoder;
   idContact = id;
-  buildingContact = false; // set the flag to indicate that we are editing an existing contact
+  buildingContact = false; // TODO set the flag to indicate that we are editing an existing contact
 
   modal.show();
   editContact(idContact); // call the editContact function with the id of the contact to be edited
 };
 
 const editContact = () => {
+  
+
   const contactEdit = agenda.findIndex((contact) => contact.id === idContact);
  if(contactEdit!==-1){
   //modificar contacto
@@ -169,11 +174,14 @@ const editContact = () => {
   agenda[contactEdit].superpoder = superpoder.value;
 //update localstorage
   saveLocalStorage();
-  //actualizar fila de la tabla
+  //todo actualizar fila indice de la tabla en tiempo real
   const filaEditada = tablaContactoBody.children[contactEdit];
-  console.log(filaEditada)
-  
-  modal.hide()
+  if(filaEditada){
+  filaEditada.childNodes[1].textContent = agenda[contactEdit].name;
+
+  }
+   modal.hide()
+   //todo mostrar sweet alert contacto actualizado
  
  }
 };
