@@ -1,4 +1,5 @@
 import Contact from "./contacts.js";
+import { validateAmountCaracters } from "./validations.js";
 
 const btnModal = document.getElementById("btnModal"); // PRIMERO click en id="btnModal"
 
@@ -28,11 +29,9 @@ const agenda = JSON.parse(localStorage.getItem("agenda")) || []; // si no hay na
 //if agenda has contacts, draw them in table
 const cargarContactos = (id) => {
   if (agenda.length !== 0) {
-    agenda.map((itemContacto, id) =>
-      dibujarFilas(itemContacto, id + 1)
-    );
+    agenda.map((itemContacto, id) => dibujarFilas(itemContacto, id + 1));
   }
-  console.log(id)
+  console.log(id);
 };
 
 //draw rows in table
@@ -72,7 +71,9 @@ const createContact = () => {
     surname.value,
     phone.value,
     email.value,
-    img.value.length  !== 0 ? img.value: `https://i.pinimg.com/1200x/29/97/81/299781432e565934aa4c8943cae829fb.jpg`,
+    img.value.length !== 0
+      ? img.value
+      : `https://i.pinimg.com/1200x/29/97/81/299781432e565934aa4c8943cae829fb.jpg`,
     company.value,
     jobtitle.value,
     address.value,
@@ -104,24 +105,23 @@ window.deleteContact = (id) => {
     cancelButtonColor: "#d33",
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
-    
     if (result.isConfirmed) {
       //aqui agrego la logica para borrar
       //tengo que buscar en que posicion esta el contacto
       const indexContact = agenda.findIndex((contact) => contact.id === id);
-      console.log(indexContact)
-      
+      console.log(indexContact);
+
       //con splice borramos el elemento de  determinada posicion del array
       agenda.splice(indexContact, 1);
-      
+
       //actualizo el local storage
       //tablaContactoBody.innerHTML = ""; //limpio todo el tbody y sus hijos
       //cargarContactos(); //vuelvo a cargar los contactos
-      
+
       tablaContactoBody.children[indexContact].remove(); //limpio el tbody
       // actualizar el numero de filas
       //for (let i = indexContact; i < tablaContactoBody.children.length; i++)
-        saveLocalStorage();
+      saveLocalStorage();
 
       Swal.fire({
         title: "Deleted!",
@@ -134,9 +134,9 @@ window.deleteContact = (id) => {
 
 //function edit contact
 window.prepareContact = (id) => {
-  //TODO update title of form add contact to edit title 
+  //TODO update title of form add contact to edit title
   const contactEdit = agenda.find((contact) => contact.id === id);
- 
+
   name.value = contactEdit.name;
   surname.value = contactEdit.surname;
   phone.value = contactEdit.phone;
@@ -156,37 +156,37 @@ window.prepareContact = (id) => {
 };
 
 const editContact = () => {
-  
-
   const contactEdit = agenda.findIndex((contact) => contact.id === idContact);
- if(contactEdit!==-1){
-  //modificar contacto
-  agenda[contactEdit].name = name.value;
-  agenda[contactEdit].surname = surname.value;
-  agenda[contactEdit].phone = phone.value;
-  agenda[contactEdit].email = email.value;
-  agenda[contactEdit].img = img.value;
-  agenda[contactEdit].company = company.value;
-  agenda[contactEdit].jobtitle = jobtitle.value;
-  agenda[contactEdit].address = address.value;
-  agenda[contactEdit].notes = notes.value;  
-  agenda[contactEdit].hobbies = hobbies.value;
-  agenda[contactEdit].superpoder = superpoder.value;
-//update localstorage
-  saveLocalStorage();
-  //todo actualizar fila indice de la tabla en tiempo real
-  const filaEditada = tablaContactoBody.children[contactEdit];
-  if(filaEditada){
-
-  //del tr accedo a los td
-  filaEditada.childNodes[2].textContent = agenda[contactEdit].name;
-  filaEditada.children[2].textContent = agenda[contactEdit].surname;
-  filaEditada.children[5].children[0].src = agenda[contactEdit].img
+  if (contactEdit !== -1) {
+    //modificar contacto
+    agenda[contactEdit].name = name.value;
+    agenda[contactEdit].surname = surname.value;
+    agenda[contactEdit].phone = phone.value;
+    agenda[contactEdit].email = email.value;
+    agenda[contactEdit].img = img.value;
+    agenda[contactEdit].company = company.value;
+    agenda[contactEdit].jobtitle = jobtitle.value;
+    agenda[contactEdit].address = address.value;
+    agenda[contactEdit].notes = notes.value;
+    agenda[contactEdit].hobbies = hobbies.value;
+    agenda[contactEdit].superpoder = superpoder.value;
+    //update localstorage
+    saveLocalStorage();
+    //todo actualizar fila indice de la tabla en tiempo real
+    const filaEditada = tablaContactoBody.children[contactEdit];
+    if (filaEditada) {
+      //del tr accedo a los td
+      filaEditada.childNodes[2].textContent = agenda[contactEdit].name;
+      filaEditada.children[2].textContent = agenda[contactEdit].surname;
+      filaEditada.children[5].children[0].src = agenda[contactEdit].img;
+    }
+    modal.hide();
+    //todo mostrar sweet alert contacto actualizado
   }
-   modal.hide()
-   //todo mostrar sweet alert contacto actualizado
- 
- }
+};
+//validations
+const validations = () => {
+  validateAmountCaracters(name,2,50)
 };
 
 //event handlers
