@@ -177,8 +177,11 @@ const editContact = () => {
   //todo actualizar fila indice de la tabla en tiempo real
   const filaEditada = tablaContactoBody.children[contactEdit];
   if(filaEditada){
-  filaEditada.childNodes[1].textContent = agenda[contactEdit].name;
 
+  //del tr accedo a los td
+  filaEditada.childNodes[2].textContent = agenda[contactEdit].name;
+  filaEditada.children[2].textContent = agenda[contactEdit].surname;
+  filaEditada.children[5].children[0].src = agenda[contactEdit].img
   }
    modal.hide()
    //todo mostrar sweet alert contacto actualizado
