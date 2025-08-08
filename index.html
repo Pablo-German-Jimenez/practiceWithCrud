@@ -36,7 +36,7 @@
         <h1>Contact list</h1>
         <button class="btn btn-primary fw-5 m-2" id="btnModal"><i class="bi bi-person-add"></i></button>
       </div>
-      <table class="table" >
+      <table class="table">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -48,8 +48,8 @@
             <th scope="col">Actions</th>
           </tr>
         </thead>
-        <tbody id="tablaContactoBody" >
-         
+        <tbody id="tablaContactoBody">
+
         </tbody>
       </table>
     </section>
@@ -80,29 +80,35 @@
       </div>
     </section>
     <!-- Modal Crear Contacto -->
-    <div class="modal fade" id="addContactModalLabel" tabindex="-1" aria-labelledby="addContactModalLabel">
+    <div class="modal fade "  id="addcontactmodallabel" tabindex="-1" aria-labelledby="addcontactmodallabel">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content bg-dark text-white">
           <div class="modal-header">
-            <h5 class="modal-title" id="addContactModalLabel">Add contact</h5>
+        <h5 class="modal-title" id="addcontactmodallabel">Add contact</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="addContactForm" novalidate>
+            <form id="addcontactmodallabel" class="formContact" novalidate>
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name"  name="name" autocomplete="name">
+                  <input type="text" class="form-control" id="name" name="name" autocomplete="name">
                   <div class="invalid-feedback">
                     Please enter a valid name bro!(between 2 char to 50chars)
                   </div>
                   <div class="valid-feedback">
-                      Sooo ! animall! xD
+                    Sooo ! animall! xD
                   </div>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="lastname" class="form-label">Lastname</label>
                   <input type="text" class="form-control" id="lastname">
+                  <div class="invalid-feedback">
+                    Please enter a valid name bro!(between 3 char to 50chars)
+                  </div>
+                  <div class="valid-feedback">
+                    una luzzz!
+                  </div>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="phone" class="form-label">Phone number</label>
@@ -110,7 +116,11 @@
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="email">
+                  <input type="email" class="form-control" id="email"
+                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                    title="Ingresá un correo válido, como ejemplo@dominio.com">
+                    <div class="valid-feedback">alto mail!!</div>
+                    <div class="invalid-feedback">Ingresame bien los datos reyy</div>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="img" class="form-label">URL picture (optional)</label>
@@ -151,11 +161,11 @@
     </div>
   </main>
   <footer class="text-center p-3 bg-body-tertiary">&copy All rights reserved</footer>
-  
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
     crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./js/app.js" type="module"></script>
 
 </body>

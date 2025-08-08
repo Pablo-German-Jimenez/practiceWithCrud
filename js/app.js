@@ -4,7 +4,7 @@ import { validateAmountCaracters } from "./validations.js";
 const btnModal = document.getElementById("btnModal"); // PRIMERO click en id="btnModal"
 
 const modal = new bootstrap.Modal(
-  document.getElementById("addContactModalLabel") // SEGUNDO elemento seleccionado para mostrarse en window
+  document.getElementById("addcontactmodallabel") // SEGUNDO elemento seleccionado para mostrarse en window
 );
 
 //DOM's elements
@@ -22,7 +22,7 @@ const superpoder = document.getElementById("superpowers");
 const tablaContactoBody = document.getElementById("tablaContactoBody");
 let buildingContact = true;
 let idContact = null;
-
+const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const agenda = JSON.parse(localStorage.getItem("agenda")) || []; // si no hay nada en local storage, crea un array vacio
 
 //add contacts to table
@@ -161,6 +161,9 @@ window.prepareContact = (id) => {
 };
 
 const editContact = () => {
+  const modalTitle = document.querySelector('.modal-title');
+  modalTitle.textContent = `Edit Contact`
+
   const contactEdit = agenda.findIndex((contact) => contact.id === idContact);
   if (contactEdit !== -1) {
     //modificar contacto
@@ -195,8 +198,13 @@ const validations = () => {
   if(!validateAmountCaracters(name,2,50)){
     validatedData = false
   }
-  return validatedData;
-};
+  if(!validateAmountCaracters(surname,3,50)){
+    validatedData = false;
+  }
+  if(!regEx.test(email.value)){
+    
+  } validatedData = false;
+  };
 
 //event handlers
 
@@ -206,7 +214,8 @@ btnModal.addEventListener("click", () => {
   modal.show();
 }); // TERCERO escucha click en btnModal y muestra el contenido del modal tomado desde el dom por id por addContactModalLabel y muestra contenido div
 
-const formContact = document.querySelector("#addContactForm");
+const formContact = document.querySelector(".formContact");
+console.log(formContact)
 formContact.addEventListener("submit", (e) => {
   e.preventDefault();
   if (buildingContact) {
