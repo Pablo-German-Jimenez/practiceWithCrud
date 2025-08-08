@@ -215,7 +215,7 @@ btnModal.addEventListener("click", () => {
 }); // TERCERO escucha click en btnModal y muestra el contenido del modal tomado desde el dom por id por addContactModalLabel y muestra contenido div
 
 const formContact = document.querySelector(".formContact");
-console.log(formContact)
+
 formContact.addEventListener("submit", (e) => {
   e.preventDefault();
   if (buildingContact) {

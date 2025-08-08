@@ -1,6 +1,5 @@
 export const validateAmountCaracters = (input,min,max) => {
-    console.log(input.value)
-    if(input.value.length >= min && input.value.length <=max){
+        if(input.value.length >= min && input.value.length <=max){
        input.classList.add('is-valid');
        input.classList.remove('is-invalid')
       
