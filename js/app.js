@@ -44,7 +44,7 @@ const dibujarFilas = (itemContacto, id) => {
             <td>${itemContacto.phone}</td>
             <td>${itemContacto.email}</td>
             <td>
-            <img
+            <img class="img-thumbnail rounded-circle me-3 w-25"
               src=${itemContacto.img}
               alt=${itemContacto.name}
                >
@@ -66,7 +66,7 @@ const saveLocalStorage = () => {
 //function create contact
 const createContact = () => {
   //search data of form and create a object contact
-  if(validations()){
+  if(!validations()){
 
   const contactNew = new Contact(
     name.value,
@@ -75,7 +75,7 @@ const createContact = () => {
     email.value,
     img.value.length !== 0
       ? img.value
-      : `https://i.pinimg.com/1200x/29/97/81/299781432e565934aa4c8943cae829fb.jpg`,
+      : `https://i.ytimg.com/vi/C5UIozbSeyM/sddefault.jpg`,
     company.value,
     jobtitle.value,
     address.value,
@@ -84,6 +84,7 @@ const createContact = () => {
     superpoder.value
   );
   //method push to array named agenda the contactNew values
+  
   agenda.push(contactNew);
   //save to local storage
   saveLocalStorage();
