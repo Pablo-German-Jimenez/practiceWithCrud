@@ -9,7 +9,7 @@ const modal = new bootstrap.Modal(
 
 //DOM's elements
 const name = document.getElementById("name");
-const surname = document.getElementById("lastname");
+const lastname = document.getElementById("lastname");
 const phone = document.getElementById("phone");
 const email = document.getElementById("email");
 const img = document.getElementById("img");
@@ -40,11 +40,11 @@ const dibujarFilas = (itemContacto, id) => {
    <tr>
             <th scope="row">${id}</th>
             <td>${itemContacto.name}</td>
-            <td>${itemContacto.surname}</td>
+            <td>${itemContacto.lastname}</td>
             <td>${itemContacto.phone}</td>
             <td>${itemContacto.email}</td>
             <td>
-            <img class="img-thumbnail rounded-circle me-3 w-25"
+            <img class="img-thumbnail rounded-circle me-3 "
               src=${itemContacto.img}
               alt=${itemContacto.name}
                >
@@ -70,7 +70,7 @@ const createContact = () => {
 
   const contactNew = new Contact(
     name.value,
-    surname.value,
+    lastname.value,
     phone.value,
     email.value,
     img.value.length !== 0
@@ -86,6 +86,7 @@ const createContact = () => {
   //method push to array named agenda the contactNew values
   
   agenda.push(contactNew);
+  
   //save to local storage
   saveLocalStorage();
   Swal.fire({
@@ -99,6 +100,8 @@ const createContact = () => {
   }else {
    console.log(`There are errors without valid!`)
   }
+
+  
 };
 // function delete contact
 window.deleteContact = (id) => {
@@ -144,7 +147,7 @@ window.prepareContact = (id) => {
   const contactEdit = agenda.find((contact) => contact.id === id);
 
   name.value = contactEdit.name;
-  surname.value = contactEdit.surname;
+  lastname.value = contactEdit.lastname;
   phone.value = contactEdit.phone;
   email.value = contactEdit.email;
   img.value = contactEdit.img;
@@ -166,10 +169,10 @@ const editContact = () => {
   modalTitle.textContent = `Edit Contact`
 
   const contactEdit = agenda.findIndex((contact) => contact.id === idContact);
-  if (contactEdit !== -1) {
+    if (contactEdit !== -1) {
     //modificar contacto
     agenda[contactEdit].name = name.value;
-    agenda[contactEdit].surname = surname.value;
+    agenda[contactEdit].lastname = lastname.value;
     agenda[contactEdit].phone = phone.value;
     agenda[contactEdit].email = email.value;
     agenda[contactEdit].img = img.value;
@@ -186,8 +189,12 @@ const editContact = () => {
     if (filaEditada) {
       //del tr accedo a los td
       filaEditada.childNodes[2].textContent = agenda[contactEdit].name;
-      filaEditada.children[2].textContent = agenda[contactEdit].surname;
+      filaEditada.children[2].textContent = agenda[contactEdit].lastname;
       filaEditada.children[5].children[0].src = agenda[contactEdit].img;
+      filaEditada.children[3].textContent = phone.value;
+      filaEditada.children[4].innerHTML =  email.value;
+      
+      
     }
     modal.hide();
     //todo mostrar sweet alert contacto actualizado
@@ -199,7 +206,7 @@ const validations = () => {
   if(!validateAmountCaracters(name,2,50)){
     validatedData = false
   }
-  if(!validateAmountCaracters(surname,3,50)){
+  if(!validateAmountCaracters(lastname,3,50)){
     validatedData = false;
   }
   if(!regEx.test(email.value)){
