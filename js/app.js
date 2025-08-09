@@ -9,7 +9,7 @@ const modal = new bootstrap.Modal(
 
 //DOM's elements
 const name = document.getElementById("name");
-const surname = document.getElementById("lastname");
+const lastname = document.getElementById("lastname");
 const phone = document.getElementById("phone");
 const email = document.getElementById("email");
 const img = document.getElementById("img");
@@ -17,8 +17,6 @@ const company = document.getElementById("company");
 const jobtitle = document.getElementById("jobtitle");
 const address = document.getElementById("address");
 const notes = document.getElementById("notes");
-const hobbies = document.getElementById("talents");
-const superpoder = document.getElementById("superpowers");
 const tablaContactoBody = document.getElementById("tablaContactoBody");
 let buildingContact = true;
 let idContact = null;
@@ -31,7 +29,6 @@ const cargarContactos = (id) => {
   if (agenda.length !== 0) {
     agenda.map((itemContacto, id) => dibujarFilas(itemContacto, id + 1));
   }
-  
 };
 
 //draw rows in table
@@ -40,16 +37,19 @@ const dibujarFilas = (itemContacto, id) => {
    <tr>
             <th scope="row">${id}</th>
             <td>${itemContacto.name}</td>
-            <td>${itemContacto.surname}</td>
+            <td>${itemContacto.lastname}</td>
             <td>${itemContacto.phone}</td>
             <td>${itemContacto.email}</td>
             <td>
-            <img class="img-thumbnail rounded-circle me-3 w-25"
+            <img class="img-thumbnail rounded-circle me-3 "
               src=${itemContacto.img}
               alt=${itemContacto.name}
                >
             </td>
-            <td ><div class="btn-group  " role="group" aria-label="Basic mixed styles example" >
+            <td>${itemContacto.company}</td>
+            <td>${itemContacto.jobtitle}</td>
+            <td>${itemContacto.address}</td>            
+           <td ><div class="btn-group  " role="group" aria-label="Basic mixed styles example" >
   <button type="button" class="btn btn-danger my-1 mx-1"><i class="bi bi-trash" onClick="deleteContact('${itemContacto.id}')"></i></button>
   <button type="button" class="btn btn-warning my-1 mx-1"><i class="bi bi-pencil-square" onClick="prepareContact('${itemContacto.id}')"></i></button>
   <button type="button" class="btn btn-primary my-1 mx-1"><i class="bi bi-eye "></i></button>
@@ -66,38 +66,36 @@ const saveLocalStorage = () => {
 //function create contact
 const createContact = () => {
   //search data of form and create a object contact
-  if(!validations()){
+  if (!validations()) {
+    const contactNew = new Contact(
+      name.value,
+      lastname.value,
+      phone.value,
+      email.value,
+      img.value.length !== 0
+        ? img.value
+        : `https://i.ytimg.com/vi/C5UIozbSeyM/sddefault.jpg`,
+      company.value,
+      jobtitle.value,
+      address.value,
+      notes.value
+    );
+    //method push to array named agenda the contactNew values
 
-  const contactNew = new Contact(
-    name.value,
-    surname.value,
-    phone.value,
-    email.value,
-    img.value.length !== 0
-      ? img.value
-      : `https://i.ytimg.com/vi/C5UIozbSeyM/sddefault.jpg`,
-    company.value,
-    jobtitle.value,
-    address.value,
-    notes.value,
-    hobbies.value,
-    superpoder.value
-  );
-  //method push to array named agenda the contactNew values
-  
-  agenda.push(contactNew);
-  //save to local storage
-  saveLocalStorage();
-  Swal.fire({
-    title: "Contact created!",
-    text: `The contact ${name.value} has been created successfully.`,
-    icon: "success",
-    confirmButtonText: "Ok",
-  });
-  formContact.reset();
-  dibujarFilas(contactNew, agenda.length);
-  }else {
-   console.log(`There are errors without valid!`)
+    agenda.push(contactNew);
+
+    //save to local storage
+    saveLocalStorage();
+    Swal.fire({
+      title: "Contact created!",
+      text: `The contact ${name.value} has been created successfully.`,
+      icon: "success",
+      confirmButtonText: "Ok",
+    });
+    formContact.reset();
+    dibujarFilas(contactNew, agenda.length);
+  } else {
+    console.log(`There are errors without valid!`);
   }
 };
 // function delete contact
@@ -144,7 +142,7 @@ window.prepareContact = (id) => {
   const contactEdit = agenda.find((contact) => contact.id === id);
 
   name.value = contactEdit.name;
-  surname.value = contactEdit.surname;
+  lastname.value = contactEdit.lastname;
   phone.value = contactEdit.phone;
   email.value = contactEdit.email;
   img.value = contactEdit.img;
@@ -152,8 +150,7 @@ window.prepareContact = (id) => {
   jobtitle.value = contactEdit.jobtitle;
   address.value = contactEdit.address;
   notes.value = contactEdit.notes;
-  hobbies.value = contactEdit.hobbies;
-  superpoder.value = contactEdit.superpoder;
+
   idContact = id;
   buildingContact = false; // TODO set the flag to indicate that we are editing an existing contact
 
@@ -162,14 +159,14 @@ window.prepareContact = (id) => {
 };
 
 const editContact = () => {
-  const modalTitle = document.querySelector('.modal-title');
-  modalTitle.textContent = `Edit Contact`
+  const modalTitle = document.querySelector(".modal-title");
+  modalTitle.textContent = `Edit Contact`;
 
   const contactEdit = agenda.findIndex((contact) => contact.id === idContact);
   if (contactEdit !== -1) {
     //modificar contacto
     agenda[contactEdit].name = name.value;
-    agenda[contactEdit].surname = surname.value;
+    agenda[contactEdit].lastname = lastname.value;
     agenda[contactEdit].phone = phone.value;
     agenda[contactEdit].email = email.value;
     agenda[contactEdit].img = img.value;
@@ -177,17 +174,20 @@ const editContact = () => {
     agenda[contactEdit].jobtitle = jobtitle.value;
     agenda[contactEdit].address = address.value;
     agenda[contactEdit].notes = notes.value;
-    agenda[contactEdit].hobbies = hobbies.value;
-    agenda[contactEdit].superpoder = superpoder.value;
+
     //update localstorage
     saveLocalStorage();
     //todo actualizar fila indice de la tabla en tiempo real
     const filaEditada = tablaContactoBody.children[contactEdit];
+    console.log(filaEditada.children[2]);
+    console.log(filaEditada.childNodes[2]);
     if (filaEditada) {
       //del tr accedo a los td
-      filaEditada.childNodes[2].textContent = agenda[contactEdit].name;
-      filaEditada.children[2].textContent = agenda[contactEdit].surname;
-      filaEditada.children[5].children[0].src = agenda[contactEdit].img;
+      filaEditada.children[1].textContent = agenda[contactEdit].name;
+      filaEditada.children[2].innerHTML = lastname.value;
+      filaEditada.children[3].textContent = phone.value;
+      filaEditada.children[5].children[0].src = agenda[contactEdit].img;      
+      filaEditada.children[4].innerHTML = email.value;
     }
     modal.hide();
     //todo mostrar sweet alert contacto actualizado
@@ -195,17 +195,17 @@ const editContact = () => {
 };
 //validations
 const validations = () => {
-  let validatedData  = true
-  if(!validateAmountCaracters(name,2,50)){
-    validatedData = false
-  }
-  if(!validateAmountCaracters(surname,3,50)){
+  let validatedData = true;
+  if (!validateAmountCaracters(name, 2, 50)) {
     validatedData = false;
   }
-  if(!regEx.test(email.value)){
-    
-  } validatedData = false;
-  };
+  if (!validateAmountCaracters(lastname, 3, 50)) {
+    validatedData = false;
+  }
+  if (!regEx.test(email.value)) {
+  }
+  validatedData = false;
+};
 
 //event handlers
 
