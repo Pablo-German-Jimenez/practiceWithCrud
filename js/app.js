@@ -9,7 +9,7 @@ const modal = new bootstrap.Modal(
 
 //DOM's elements
 const name = document.getElementById("name");
-const lastname = document.getElementById("lastname");
+
 const phone = document.getElementById("phone");
 const email = document.getElementById("email");
 const img = document.getElementById("img");
@@ -22,10 +22,13 @@ let buildingContact = true;
 let idContact = null;
 const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const agenda = JSON.parse(localStorage.getItem("agenda")) || []; // si no hay nada en local storage, crea un array vacio
+const lastname = document.getElementById("lastname");
+console.log("1) Elemento input ‘lastname’ →", lastname);
 
 //add contacts to table
 //if agenda has contacts, draw them in table
 const cargarContactos = (id) => {
+  console.log("2) Valor de lastname.value →", lastname.value);
   if (agenda.length !== 0) {
     agenda.map((itemContacto, id) => dibujarFilas(itemContacto, id + 1));
   }
@@ -34,14 +37,14 @@ const cargarContactos = (id) => {
 //draw rows in table
 const dibujarFilas = (itemContacto, id) => {
   tablaContactoBody.innerHTML += `
-   <tr>
+   <tr class="border-danger">
             <th scope="row">${id}</th>
             <td>${itemContacto.name}</td>
             <td>${itemContacto.lastname}</td>
             <td>${itemContacto.phone}</td>
             <td>${itemContacto.email}</td>
-            <td>
-            <img class="img-thumbnail rounded-circle me-3 "
+            <td class="justify-content-center d-flex">
+            <img class="img-thumbnail rounded-circle img-js "
               src=${itemContacto.img}
               alt=${itemContacto.name}
                >
@@ -66,7 +69,7 @@ const saveLocalStorage = () => {
 //function create contact
 const createContact = () => {
   //search data of form and create a object contact
-  if (!validations()) {
+  if (true) {
     const contactNew = new Contact(
       name.value,
       lastname.value,
@@ -179,14 +182,13 @@ const editContact = () => {
     saveLocalStorage();
     //todo actualizar fila indice de la tabla en tiempo real
     const filaEditada = tablaContactoBody.children[contactEdit];
-    console.log(filaEditada.children[2]);
-    console.log(filaEditada.childNodes[2]);
+    console.log(agenda[contactEdit].lastname);
     if (filaEditada) {
       //del tr accedo a los td
       filaEditada.children[1].textContent = agenda[contactEdit].name;
-      filaEditada.children[2].innerHTML = lastname.value;
+      filaEditada.children[2].textContent = agenda[contactEdit].lastname;
       filaEditada.children[3].textContent = phone.value;
-      filaEditada.children[5].children[0].src = agenda[contactEdit].img;      
+      filaEditada.children[5].children[0].src = agenda[contactEdit].img;
       filaEditada.children[4].innerHTML = email.value;
     }
     modal.hide();
@@ -203,8 +205,9 @@ const validations = () => {
     validatedData = false;
   }
   if (!regEx.test(email.value)) {
+    validatedData = false;
   }
-  validatedData = false;
+  return validatedData;
 };
 
 //event handlers
