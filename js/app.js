@@ -37,7 +37,7 @@ const cargarContactos = (id) => {
 //draw rows in table
 const dibujarFilas = (itemContacto, id) => {
   tablaContactoBody.innerHTML += `
-   <tr class="border-danger">
+   <tr >
             <th scope="row">${id}</th>
             <td>${itemContacto.name}</td>
             <td>${itemContacto.lastname}</td>
@@ -55,7 +55,7 @@ const dibujarFilas = (itemContacto, id) => {
            <td ><div class="btn-group  " role="group" aria-label="Basic mixed styles example" >
   <button type="button" class="btn btn-danger my-1 mx-1"><i class="bi bi-trash" onClick="deleteContact('${itemContacto.id}')"></i></button>
   <button type="button" class="btn btn-warning my-1 mx-1"><i class="bi bi-pencil-square" onClick="prepareContact('${itemContacto.id}')"></i></button>
-  <button type="button" class="btn btn-primary my-1 mx-1"><i class="bi bi-eye "></i></button>
+  <button type="button" class="btn btn-primary my-1 mx-1"><i class="bi bi-eye " onClick="readContact('${itemContacto.id}')"></i></button>
 </div></td>
             
           </tr>`;
@@ -65,6 +65,47 @@ const dibujarFilas = (itemContacto, id) => {
 const saveLocalStorage = () => {
   localStorage.setItem("agenda", JSON.stringify(agenda));
 };
+//function read
+
+window.readContact=(id)=>{
+  const liItem = document.querySelector('.list-group-flush');
+  const readContactIndex = agenda.find((readContact)=>readContact.id === id)
+  name.value = readContactIndex.name;
+  lastname.value = readContactIndex.lastname;
+  phone.value = readContactIndex.phone;
+  email.value = readContactIndex.email;
+  img.value = readContactIndex.img;
+  company.value = readContactIndex.company;
+  jobtitle.value = readContactIndex.jobtitle;
+  address.value = readContactIndex.address;
+  notes.value = readContactIndex.notes;
+  
+ 
+  liItem.innerHTML = `
+       <div class="d-flex align-items-center">
+        <img src="${readContactIndex.img}" class="img-thumbnail rounded-circle me-3" width="90" height="70"
+          alt="airchairBboyLinkinYoung">
+        <div class="d-flex flex-column">
+          <h3 class="mb-0">Bboy linkin</h3>
+          <p class="text-secondary mb-0">bboy.linkin@gmail.com</p>
+        </div>
+        <div class="ms-auto">
+          <button class="btn btn-secondary">Message</button>
+        </div>
+      </div>
+        <li class="list-group-item">Name : ${readContactIndex.name}</li>
+        <li class="list-group-item">Last Name : ${readContactIndex.lastname}</li>
+        <li class="list-group-item">Phone number : ${readContactIndex.phone}</li>
+        <li class="list-group-item">Job title : ${readContactIndex.email}</li>
+        <li class="list-group-item">Address : ${readContactIndex.address}</li>
+        <li class="list-group-item">Company : ${readContactIndex.company}</li>
+           <div class="mx-3 my-3">
+        <h5 class="">Notes</h5>
+        <p>${readContactIndex.notes}</p>
+
+      </div>`
+      
+}
 
 //function create contact
 const createContact = () => {
@@ -101,6 +142,8 @@ const createContact = () => {
     console.log(`There are errors without valid!`);
   }
 };
+
+
 // function delete contact
 window.deleteContact = (id) => {
   Swal.fire({
@@ -195,7 +238,7 @@ const editContact = () => {
     //todo mostrar sweet alert contacto actualizado
   }
 };
-//validations
+/*validations
 const validations = () => {
   let validatedData = true;
   if (!validateAmountCaracters(name, 2, 50)) {
@@ -208,7 +251,7 @@ const validations = () => {
     validatedData = false;
   }
   return validatedData;
-};
+};*/
 
 //event handlers
 
