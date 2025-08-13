@@ -22,8 +22,8 @@ let idContact = null;
 const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const agenda = JSON.parse(localStorage.getItem("agenda")) || []; // si no hay nada en local storage, crea un array vacio
 const lastname = document.getElementById("lastname");
-const firstTable= document.querySelector('.first-table');
-console.log(firstTable)
+const sectionTableContacts= document.querySelector('.section-table-contacts');
+console.log(sectionTableContacts)
 
 //add contacts to table
 //if agenda has contacts, draw them in table
@@ -108,7 +108,7 @@ window.readContact=(id)=>{
 }
 
 //function create contact
-const createContact = () => {
+const createContact = (id) => {
   //search data of form and create a object contact
   if (true) {
     const contactNew = new Contact(
@@ -130,6 +130,10 @@ const createContact = () => {
 
     //save to local storage
     saveLocalStorage();
+    //d-none
+
+    //if(sectionTableContacts.classList.contains)
+
     Swal.fire({
       title: "Contact created!",
       text: `The contact ${name.value} has been created successfully.`,
@@ -138,6 +142,7 @@ const createContact = () => {
     });
     formContact.reset();
     dibujarFilas(contactNew, agenda.length);
+    
   } else {
     console.log(`There are errors without valid!`);
   }
@@ -280,9 +285,13 @@ formContact.addEventListener("submit", (e) => {
   if (buildingContact) {
     // if buildingContact is true, create a new contact
     createContact();
-    firstTable.classList.remove = 'd-none'
+    sectionTableContacts.classList.toggle(`d-none`);
+    console.log(`probando probando`)
+    
   } else {
     editContact(); // if buildingContact is false, edit the existing contact
   }
 });
 cargarContactos();
+
+
