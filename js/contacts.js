@@ -1,7 +1,7 @@
 export default class Contact {
   #id;
   #name;
-  #surname;
+  #lastname;
   #phone;
   #email;
   #img;
@@ -9,11 +9,10 @@ export default class Contact {
   #jobtitle;
   #address;
   #notes;
-  #hobbies;
-  #superpoder;
+
   constructor(
     name,
-    surname,
+    lastname,
     phone,
     email,
     img,
@@ -21,12 +20,11 @@ export default class Contact {
     jobtitle,
     address,
     notes,
-    hobbies,
-    superpoder
+
   ) {
     this.#id = crypto.randomUUID();
     this.#name = name;
-    this.#surname = surname;
+    this.#lastname = lastname;
     this.#phone = phone;
     this.#email = email;
     this.#img = img;
@@ -34,8 +32,7 @@ export default class Contact {
     this.#jobtitle = jobtitle;
     this.#address = address;
     this.#notes = notes;
-    this.#hobbies = hobbies;
-    this.#superpoder = superpoder;
+
   }
   get id() {
     return this.#id;
@@ -44,8 +41,8 @@ export default class Contact {
   get name() {
     return this.#name;
   }
-  get surname() {
-    return this.#surname;
+  get lastname() {
+    return this.#lastname;
   }
   get phone() {
     return this.#phone;
@@ -68,17 +65,13 @@ export default class Contact {
   get notes() {
     return this.#notes;
   }
-  get hobbies() {
-    return this.#hobbies;
-  }
-  get superpoder() {
-    return this.#superpoder;
-  }
+
+  
   set name(name) {
     this.#name = name;
   }
-  set surname(surname) {
-    this.#surname = surname;
+  set lastname(lastname) {
+    this.#lastname = lastname;
   }
   set phone(phone) {
     this.#phone = phone;
@@ -101,18 +94,13 @@ export default class Contact {
   set notes(notes) {
     this.#notes = notes;
   }
-  set hobbies(hobbies) {
-    this.#hobbies = hobbies;
-  }
-  set superpoder(superpoder) {
-    this.#superpoder = superpoder;
-  }
+
 
   toJSON() {
     return {
       id: this.id,
       name: this.name,
-      surname: this.surname,
+      lastname: this.lastname,
       phone: this.phone,
       email: this.email,
       img: this.img,
@@ -120,8 +108,7 @@ export default class Contact {
       jobtitle: this.jobtitle,
       address: this.address,
       notes: this.notes,
-      hobbies: this.hobbies,
-      superpoder: this.superpoder,
+   
     };
   }
 }

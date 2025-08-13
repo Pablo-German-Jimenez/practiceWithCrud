@@ -1,5 +1,5 @@
 import Contact from "./contacts.js";
-import { validateAmountCaracters } from "./validations.js";
+import { validateAmountCaracters,validateField,validateEmail,validatePhone,validateURL } from "./validations.js";
 
 const btnModal = document.getElementById("btnModal"); // PRIMERO click en id="btnModal"
 
@@ -9,7 +9,6 @@ const modal = new bootstrap.Modal(
 
 //DOM's elements
 const name = document.getElementById("name");
-const lastname = document.getElementById("lastname");
 const phone = document.getElementById("phone");
 const email = document.getElementById("email");
 const img = document.getElementById("img");
@@ -22,10 +21,16 @@ let buildingContact = true;
 let idContact = null;
 const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const agenda = JSON.parse(localStorage.getItem("agenda")) || []; // si no hay nada en local storage, crea un array vacio
+const lastname = document.getElementById("lastname");
+const sectionTableContacts= document.querySelector('.section-table-contacts');
+const emptyState = document.querySelector('.empty-state');
+
+console.log(emptyState)
 
 //add contacts to table
 //if agenda has contacts, draw them in table
 const cargarContactos = (id) => {
+
   if (agenda.length !== 0) {
     agenda.map((itemContacto, id) => dibujarFilas(itemContacto, id + 1));
   }
@@ -34,14 +39,14 @@ const cargarContactos = (id) => {
 //draw rows in table
 const dibujarFilas = (itemContacto, id) => {
   tablaContactoBody.innerHTML += `
-   <tr>
+   <tr >
             <th scope="row">${id}</th>
             <td>${itemContacto.name}</td>
             <td>${itemContacto.lastname}</td>
             <td>${itemContacto.phone}</td>
             <td>${itemContacto.email}</td>
-            <td>
-            <img class="img-thumbnail rounded-circle me-3 "
+            <td class="justify-content-center d-flex">
+            <img class="img-thumbnail rounded-circle img-js "
               src=${itemContacto.img}
               alt=${itemContacto.name}
                >
@@ -52,7 +57,7 @@ const dibujarFilas = (itemContacto, id) => {
            <td ><div class="btn-group  " role="group" aria-label="Basic mixed styles example" >
   <button type="button" class="btn btn-danger my-1 mx-1"><i class="bi bi-trash" onClick="deleteContact('${itemContacto.id}')"></i></button>
   <button type="button" class="btn btn-warning my-1 mx-1"><i class="bi bi-pencil-square" onClick="prepareContact('${itemContacto.id}')"></i></button>
-  <button type="button" class="btn btn-primary my-1 mx-1"><i class="bi bi-eye "></i></button>
+  <button type="button" class="btn btn-primary my-1 mx-1"><i class="bi bi-eye " onClick="readContact('${itemContacto.id}')"></i></button>
 </div></td>
             
           </tr>`;
@@ -62,11 +67,52 @@ const dibujarFilas = (itemContacto, id) => {
 const saveLocalStorage = () => {
   localStorage.setItem("agenda", JSON.stringify(agenda));
 };
+//function read
+
+window.readContact=(id)=>{
+
+  const liItem = document.querySelector('.list-group-flush');
+  const readContactIndex = agenda.find((readContact)=>readContact.id === id)
+  name.value = readContactIndex.name;
+  lastname.value = readContactIndex.lastname;
+  phone.value = readContactIndex.phone;
+  email.value = readContactIndex.email;
+  img.value = readContactIndex.img;
+  company.value = readContactIndex.company;
+  jobtitle.value = readContactIndex.jobtitle;
+  address.value = readContactIndex.address;
+  notes.value = readContactIndex.notes;
+  
+ 
+  liItem.innerHTML = `
+       <div class="d-flex align-items-center">
+        <img src="${readContactIndex.img}" class="img-thumbnail rounded-circle me-3" width="90" height="70"
+          alt="airchairBboyLinkinYoung">
+        <div class="d-flex flex-column">
+          <h3 class="mb-0">Bboy linkin</h3>
+          <p class="text-secondary mb-0">bboy.linkin@gmail.com</p>
+        </div>
+        <div class="ms-auto">
+          <button class="btn btn-secondary">Message</button>
+        </div>
+      </div>
+        <li class="list-group-item">Name : ${readContactIndex.name}</li>
+        <li class="list-group-item">Last Name : ${readContactIndex.lastname}</li>
+        <li class="list-group-item">Phone number : ${readContactIndex.phone}</li>
+        <li class="list-group-item">Job title : ${readContactIndex.email}</li>
+        <li class="list-group-item">Address : ${readContactIndex.address}</li>
+        <li class="list-group-item">Company : ${readContactIndex.company}</li>
+           <div class="mx-3 my-3">
+        <h5 class="">Notes</h5>
+        <p>${readContactIndex.notes}</p>
+      </div>`
+ 
+}
 
 //function create contact
-const createContact = () => {
+const createContact = (id) => {
   //search data of form and create a object contact
-  if (!validations()) {
+  if (true) {
     const contactNew = new Contact(
       name.value,
       lastname.value,
@@ -74,7 +120,7 @@ const createContact = () => {
       email.value,
       img.value.length !== 0
         ? img.value
-        : `https://i.ytimg.com/vi/C5UIozbSeyM/sddefault.jpg`,
+        : `https://st3.depositphotos.com/2853475/12929/i/450/depositphotos_129296344-stock-photo-b-boy-breakdancing-outdoors.jpg`,
       company.value,
       jobtitle.value,
       address.value,
@@ -86,6 +132,10 @@ const createContact = () => {
 
     //save to local storage
     saveLocalStorage();
+    //d-none
+
+    //if(sectionTableContacts.classList.contains)
+
     Swal.fire({
       title: "Contact created!",
       text: `The contact ${name.value} has been created successfully.`,
@@ -94,10 +144,13 @@ const createContact = () => {
     });
     formContact.reset();
     dibujarFilas(contactNew, agenda.length);
+    
   } else {
     console.log(`There are errors without valid!`);
   }
 };
+
+
 // function delete contact
 window.deleteContact = (id) => {
   Swal.fire({
@@ -139,6 +192,7 @@ window.deleteContact = (id) => {
 //function edit contact
 window.prepareContact = (id) => {
   //TODO update title of form add contact to edit title
+  
   const contactEdit = agenda.find((contact) => contact.id === id);
 
   name.value = contactEdit.name;
@@ -159,6 +213,7 @@ window.prepareContact = (id) => {
 };
 
 const editContact = () => {
+
   const modalTitle = document.querySelector(".modal-title");
   modalTitle.textContent = `Edit Contact`;
 
@@ -179,21 +234,30 @@ const editContact = () => {
     saveLocalStorage();
     //todo actualizar fila indice de la tabla en tiempo real
     const filaEditada = tablaContactoBody.children[contactEdit];
-    console.log(filaEditada.children[2]);
-    console.log(filaEditada.childNodes[2]);
+    
     if (filaEditada) {
       //del tr accedo a los td
       filaEditada.children[1].textContent = agenda[contactEdit].name;
-      filaEditada.children[2].innerHTML = lastname.value;
+      filaEditada.children[2].textContent = agenda[contactEdit].lastname;
       filaEditada.children[3].textContent = phone.value;
-      filaEditada.children[5].children[0].src = agenda[contactEdit].img;      
+      filaEditada.children[5].children[0].src = agenda[contactEdit].img;
       filaEditada.children[4].innerHTML = email.value;
+      window.readContact(filaEditada)
+    
+      
     }
     modal.hide();
+    
+       Swal.fire({
+      title: "Contact created!",
+      text: `The contact ${filaEditada.name.value} has been created successfully.`,
+      icon: "success",
+      confirmButtonText: "Ok",
+    });
     //todo mostrar sweet alert contacto actualizado
   }
 };
-//validations
+/*validations
 const validations = () => {
   let validatedData = true;
   if (!validateAmountCaracters(name, 2, 50)) {
@@ -203,13 +267,15 @@ const validations = () => {
     validatedData = false;
   }
   if (!regEx.test(email.value)) {
+    validatedData = false;
   }
-  validatedData = false;
-};
+  return validatedData;
+};*/
 
 //event handlers
 
 btnModal.addEventListener("click", () => {
+  emptyState.classList.add('d-none');
   formContact.reset();
   buildingContact = true; // reset the flag to indicate a new contact is being built
   modal.show();
@@ -219,11 +285,34 @@ const formContact = document.querySelector(".formContact");
 
 formContact.addEventListener("submit", (e) => {
   e.preventDefault();
+    const isNameValid = validateField(name, 2, 50, /^[A-Za-z\s]+$/);
+  const isLastnameValid = validateField(lastname, 3, 50, /^[A-Za-z\s]+$/);
+  const isEmailValid = validateEmail(email);
+  const isPhoneValid = validatePhone(phone);
+  const isImgValid = validateURL(img);
+
+  const allValid = isNameValid && isLastnameValid && isEmailValid && isPhoneValid && isImgValid;
+
+  if (!allValid) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops!",
+      text: "Revisá los campos, hay algo que no está bien.",
+    });
+    return;
+  }
+
+
   if (buildingContact) {
     // if buildingContact is true, create a new contact
     createContact();
+    sectionTableContacts.classList.toggle`d-none`;
+    console.log(`probando probando`)
+    
   } else {
     editContact(); // if buildingContact is false, edit the existing contact
   }
 });
 cargarContactos();
+
+

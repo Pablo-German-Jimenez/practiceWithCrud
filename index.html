@@ -10,6 +10,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
   <link rel="stylesheet" href="./css/styles.css">
   <title>Agenda Contacts</title>
 </head>
@@ -18,7 +20,9 @@
   <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container  justify-content-between">
-        <a class="navbar-brand" href="./index.html"><i class="bi bi-calendar-event text-success">Agenda</i> </a>
+        <a class="navbar-brand neon-sign" href="./index.html">
+          <i class="bi bi-calendar-event text-success">Agenda Breakers🤸🏻‍♂️🎶⚡</i>
+        </a>
 
 
         <form class="input-group d-flex " style="width: 18rem" role="search">
@@ -31,12 +35,22 @@
     </nav>
   </header>
   <main class="container my-4">
-    <section class="sectionTableContacts">
+    <button class="btn btn-primary fw-5 m-2" id="btnModal"><i class="bi bi-person-add"></i></button>
+    <div class="no-contacts-message text-center my-5">
+      <div class="empty-state">
+        <img src="./img/Vídeo sin título ‐ Hecho con Clipchamp.gif" alt="No contacts" class="empty-gif mb-4"
+          style="max-width: 300px;">
+
+        <p class="fs-4">♪THERE ISN'T ANY CONTACT DUDE♪</p>
+
+      </div>
+    </div>
+    <section class="section-table-contacts d-none" id="contactsTable" class="container mt-5">
       <div class="d-flex justify-content-between">
         <h1>Contact list</h1>
-        <button class="btn btn-primary fw-5 m-2" id="btnModal"><i class="bi bi-person-add"></i></button>
+
       </div>
-      <table class="table">
+      <table class="table  first-table">
         <thead>
           <tr class="container">
             <th scope="col">#</th>
@@ -44,7 +58,7 @@
             <th scope="col">Last name</th>
             <th scope="col">Phone number</th>
             <th scope="col">Email</th>
-            <th scope="col">Photo</th>
+            <th scope="col" class="text-center">Photo</th>
             <th scope="col">Company</th>
             <th scope="col">Job title</th>
             <th scope="col">Address</th>
@@ -56,111 +70,102 @@
         </tbody>
       </table>
     </section>
-    <section class="container mt-5  sectionDetailContact">
-      <div class="d-flex align-items-center">
-        <img src="./img/doingFlares.jpg" class="img-thumbnail rounded-circle me-3" width="90" height="70"
-          alt="airchairBboyLinkinYoung">
-        <div class="d-flex flex-column">
-          <h3 class="mb-0">Bboy linkin</h3>
-          <p class="text-secondary mb-0">bboy.linkin@gmail.com</p>
-        </div>
-        <div class="ms-auto">
-          <button class="btn btn-secondary">Message</button>
-        </div>
-      </div>
-      <ul class="list-group list-group-flush">
-        <h6 class="mt-4">Contac info</h6>
-        <li class="list-group-item">Name</li>
-        <li class="list-group-item">Last Name</li>
-        <li class="list-group-item">Job</li>
-        <li class="list-group-item">Company</li>
-      </ul>
-      <div class="mx-3 my-3">
-        <h5 class="">Notes</h5>
-        <p>Germán is a developer full stack and manager at BlockchainDevs, we met at a conference in San Francisco in
-          2022, he showed be interested in exploring new marketing strategies and technologies.</p>
+    <section class="container mt-5  sectionDetailContact ">
 
-      </div>
+      <ul class="list-group list-group-flush">
+
+      </ul>
+
     </section>
     <!-- Modal Crear Contacto -->
-    <div class="modal fade "  id="addcontactmodallabel" tabindex="-1" aria-labelledby="addcontactmodallabel">
+    <div class="modal fade " id="addcontactmodallabel" tabindex="-1" aria-labelledby="addcontactmodallabel">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content bg-dark text-white">
           <div class="modal-header">
-        <h5 class="modal-title" id="addcontactmodallabel">Add contact</h5>
+            <h5 class="modal-title" id="addcontactmodallabel">Add contact</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="addcontactmodallabel" class="formContact" >
+            <form id="addcontactmodallabel" class="formContact" novalidate>
               <div class="row">
+                <!-- Name -->
                 <div class="col-md-6 mb-3">
                   <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name" name="name" autocomplete="name">
-                  <div class="invalid-feedback">
-                    Please enter a valid name bro!(between 2 char to 50chars)
-                  </div>
-                  <div class="valid-feedback">
-                    Sooo ! animall! xD
-                  </div>
+                  <input type="text" class="form-control" id="name" name="name" autocomplete="name" required
+                    minlength="2" maxlength="50" pattern="[A-Za-z\s]+" />
+                  <div class="invalid-feedback">Please enter a valid name (2–50 letters).</div>
+                  <div class="valid-feedback">Sooo ! animall! xD</div>
                 </div>
+
+                <!-- Lastname -->
                 <div class="col-md-6 mb-3">
                   <label for="lastname" class="form-label">Lastname</label>
-                  <input type="text" class="form-control" id="lastname">
-                  <div class="invalid-feedback">
-                    Please enter a valid name bro!(between 3 char to 50chars)
-                  </div>
-                  <div class="valid-feedback">
-                    una luzzz!
-                  </div>
+                  <input type="text" class="form-control" id="lastname" name="lastname" required minlength="3"
+                    maxlength="50" pattern="[A-Za-z\s]+" />
+                  <div class="invalid-feedback">Please enter a valid last name (3–50 letters).</div>
+                  <div class="valid-feedback">Una luzzz!</div>
                 </div>
+
+                <!-- Phone -->
                 <div class="col-md-6 mb-3">
                   <label for="phone" class="form-label">Phone number</label>
-                  <input type="number"  class="form-control" id="phone">
+                  <input type="tel" class="form-control" id="phone" name="phone" required pattern="[0-9]{7,15}"
+                    title="Enter a valid phone number (7–15 digits)" />
                 </div>
+
+                <!-- Email -->
                 <div class="col-md-6 mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="email"
-                
-                    title="Ingresá un correo válido, como ejemplo@dominio.com">
-                    <div class="valid-feedback">alto mail!!</div>
-                    <div class="invalid-feedback">Ingresame bien los datos reyy</div>
+                  <input type="email" class="form-control" id="email" name="email" required
+                    title="Enter a valid email like example@domain.com" />
+                  <div class="valid-feedback">Alto mail!!</div>
+                  <div class="invalid-feedback">Ingresame bien los datos reyy</div>
                 </div>
+
+                <!-- Image URL -->
                 <div class="col-md-6 mb-3">
                   <label for="img" class="form-label">URL picture (optional)</label>
-                  <input type="url" class="form-control" id="img">
+                  <input type="url" class="form-control" id="img" name="img" pattern="https?://.+"
+                    title="Enter a valid URL starting with http or https" />
                 </div>
+
+                <!-- Company -->
                 <div class="col-md-6 mb-3">
                   <label for="company" class="form-label">Company</label>
-                  <input type="text" class="form-control" id="company">
+                  <input type="text" class="form-control" id="company" name="company" maxlength="50" />
                 </div>
+
+                <!-- Job Title -->
                 <div class="col-md-6 mb-3">
                   <label for="jobtitle" class="form-label">Job title</label>
-                  <input type="text" class="form-control" id="jobtitle">
+                  <input type="text" class="form-control" id="jobtitle" name="jobtitle" maxlength="50" />
                 </div>
+
+                <!-- Address -->
                 <div class="col-md-6 mb-3">
                   <label for="address" class="form-label">Address</label>
-                  <input type="text" class="form-control" id="address">
+                  <input type="text" class="form-control" id="address" name="address" maxlength="100" />
                 </div>
-                <div class="col-md-6 mb-3">
-                  <label for="talents" class="form-label">Talents</label>
-                  <input type="text" class="form-control" id="talents">
-                </div>
+
+                <!-- Notes -->
                 <div class="col-12 mb-3">
                   <label for="notes" class="form-label">Notes</label>
-                  <textarea class="form-control" id="notes" rows="3"></textarea>
+                  <textarea class="form-control" id="notes" name="notes" rows="3" maxlength="300"></textarea>
                 </div>
               </div>
+
               <div class="text-end">
                 <button type="submit" class="btn btn-primary">Save contact</button>
               </div>
             </form>
+
           </div>
         </div>
       </div>
     </div>
-    <audio src="./img/Duke Dumont - Ocean Drive (Official Music Video).mp3" autoplay controls loop>
-  Tu navegador no soporta audio HTML5.
-</audio>
+    <audio src="./img/Battle Pets (feat. Dj Zapy & Dj Uragun).mp3" controls loop>
+      Tu navegador no soporta audio HTML5.
+    </audio>
 
   </main>
   <footer class="text-center p-3 bg-body-tertiary">&copy All rights reserved</footer>
