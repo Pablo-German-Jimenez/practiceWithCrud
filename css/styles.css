@@ -12,3 +12,46 @@ main {
   width: 60px;
   height: 60px;
 }
+
+/* Efecto de neón y movimiento lateral */
+.neon-sign {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #00ffcc;
+  text-shadow:
+    0 0 5px #00ffcc,
+    0 0 10px #00ffcc,
+    0 0 20px #00ffcc,
+    0 0 40px #00ffcc;
+  animation: moveSide 2s ease-in-out infinite alternate;
+  display: inline-block;
+}
+
+/* Animación de movimiento horizontal */
+@keyframes moveSide {
+  50% {
+    transform: translateX(35px);
+  }
+  100% {
+    transform: translateX(15px);
+  }
+}
+
+/* Movimiento de acercamiento y alejamiento */
+#btnModal {
+  animation: zoomInOut 1.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Animación */
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.3);
+  }
+  50% {
+    transform: scale(1);
+  }
+}

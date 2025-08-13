@@ -9,7 +9,6 @@ const modal = new bootstrap.Modal(
 
 //DOM's elements
 const name = document.getElementById("name");
-
 const phone = document.getElementById("phone");
 const email = document.getElementById("email");
 const img = document.getElementById("img");
@@ -23,12 +22,13 @@ let idContact = null;
 const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const agenda = JSON.parse(localStorage.getItem("agenda")) || []; // si no hay nada en local storage, crea un array vacio
 const lastname = document.getElementById("lastname");
-console.log("1) Elemento input ‘lastname’ →", lastname);
+const firstTable= document.querySelector('.first-table');
+console.log(firstTable)
 
 //add contacts to table
 //if agenda has contacts, draw them in table
 const cargarContactos = (id) => {
-  console.log("2) Valor de lastname.value →", lastname.value);
+
   if (agenda.length !== 0) {
     agenda.map((itemContacto, id) => dibujarFilas(itemContacto, id + 1));
   }
@@ -68,6 +68,7 @@ const saveLocalStorage = () => {
 //function read
 
 window.readContact=(id)=>{
+
   const liItem = document.querySelector('.list-group-flush');
   const readContactIndex = agenda.find((readContact)=>readContact.id === id)
   name.value = readContactIndex.name;
@@ -102,9 +103,8 @@ window.readContact=(id)=>{
            <div class="mx-3 my-3">
         <h5 class="">Notes</h5>
         <p>${readContactIndex.notes}</p>
-
       </div>`
-      
+ 
 }
 
 //function create contact
@@ -185,6 +185,7 @@ window.deleteContact = (id) => {
 //function edit contact
 window.prepareContact = (id) => {
   //TODO update title of form add contact to edit title
+  
   const contactEdit = agenda.find((contact) => contact.id === id);
 
   name.value = contactEdit.name;
@@ -205,6 +206,7 @@ window.prepareContact = (id) => {
 };
 
 const editContact = () => {
+
   const modalTitle = document.querySelector(".modal-title");
   modalTitle.textContent = `Edit Contact`;
 
@@ -225,7 +227,7 @@ const editContact = () => {
     saveLocalStorage();
     //todo actualizar fila indice de la tabla en tiempo real
     const filaEditada = tablaContactoBody.children[contactEdit];
-    console.log(agenda[contactEdit].lastname);
+    
     if (filaEditada) {
       //del tr accedo a los td
       filaEditada.children[1].textContent = agenda[contactEdit].name;
@@ -233,8 +235,18 @@ const editContact = () => {
       filaEditada.children[3].textContent = phone.value;
       filaEditada.children[5].children[0].src = agenda[contactEdit].img;
       filaEditada.children[4].innerHTML = email.value;
+      window.readContact(filaEditada)
+    
+      
     }
     modal.hide();
+    
+       Swal.fire({
+      title: "Contact created!",
+      text: `The contact ${filaEditada.name.value} has been created successfully.`,
+      icon: "success",
+      confirmButtonText: "Ok",
+    });
     //todo mostrar sweet alert contacto actualizado
   }
 };
@@ -268,6 +280,7 @@ formContact.addEventListener("submit", (e) => {
   if (buildingContact) {
     // if buildingContact is true, create a new contact
     createContact();
+    firstTable.classList.remove = 'd-none'
   } else {
     editContact(); // if buildingContact is false, edit the existing contact
   }
