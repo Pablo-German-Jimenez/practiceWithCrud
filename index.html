@@ -36,7 +36,16 @@
   </header>
   <main class="container my-4">
     <button class="btn btn-primary fw-5 m-2" id="btnModal"><i class="bi bi-person-add"></i></button>
-    <section class="section-table-contacts d-none" class="container mt-5">
+    <div class="no-contacts-message text-center my-5">
+      <div class="empty-state">
+        <img src="./img/Vídeo sin título ‐ Hecho con Clipchamp.gif" alt="No contacts" class="empty-gif mb-4"
+          style="max-width: 300px;">
+
+        <p class="fs-4">♪THERE ISN'T ANY CONTACT DUDE♪</p>
+
+      </div>
+    </div>
+    <section class="section-table-contacts d-none" id="contactsTable" class="container mt-5">
       <div class="d-flex justify-content-between">
         <h1>Contact list</h1>
 
@@ -64,7 +73,7 @@
     <section class="container mt-5  sectionDetailContact ">
 
       <ul class="list-group list-group-flush">
-        <h6 class="mt-4">Contac info</h6>
+
       </ul>
 
     </section>
@@ -77,69 +86,84 @@
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="addcontactmodallabel" class="formContact">
+            <form id="addcontactmodallabel" class="formContact" novalidate>
               <div class="row">
+                <!-- Name -->
                 <div class="col-md-6 mb-3">
                   <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name" name="name" autocomplete="name">
-                  <div class="invalid-feedback">
-                    Please enter a valid name bro!(between 2 char to 50chars)
-                  </div>
-                  <div class="valid-feedback">
-                    Sooo ! animall! xD
-                  </div>
+                  <input type="text" class="form-control" id="name" name="name" autocomplete="name" required
+                    minlength="2" maxlength="50" pattern="[A-Za-z\s]+" />
+                  <div class="invalid-feedback">Please enter a valid name (2–50 letters).</div>
+                  <div class="valid-feedback">Sooo ! animall! xD</div>
                 </div>
+
+                <!-- Lastname -->
                 <div class="col-md-6 mb-3">
                   <label for="lastname" class="form-label">Lastname</label>
-                  <input type="text" class="form-control" id="lastname">
-                  <div class="invalid-feedback">
-                    Please enter a valid name bro!(between 3 char to 50chars)
-                  </div>
-                  <div class="valid-feedback">
-                    una luzzz!
-                  </div>
+                  <input type="text" class="form-control" id="lastname" name="lastname" required minlength="3"
+                    maxlength="50" pattern="[A-Za-z\s]+" />
+                  <div class="invalid-feedback">Please enter a valid last name (3–50 letters).</div>
+                  <div class="valid-feedback">Una luzzz!</div>
                 </div>
+
+                <!-- Phone -->
                 <div class="col-md-6 mb-3">
                   <label for="phone" class="form-label">Phone number</label>
-                  <input type="number" maxlength="10" class="form-control" id="phone">
+                  <input type="tel" class="form-control" id="phone" name="phone" required pattern="[0-9]{7,15}"
+                    title="Enter a valid phone number (7–15 digits)" />
                 </div>
+
+                <!-- Email -->
                 <div class="col-md-6 mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="email"
-                    title="Ingresá un correo válido, como ejemplo@dominio.com">
-                  <div class="valid-feedback">alto mail!!</div>
+                  <input type="email" class="form-control" id="email" name="email" required
+                    title="Enter a valid email like example@domain.com" />
+                  <div class="valid-feedback">Alto mail!!</div>
                   <div class="invalid-feedback">Ingresame bien los datos reyy</div>
                 </div>
+
+                <!-- Image URL -->
                 <div class="col-md-6 mb-3">
                   <label for="img" class="form-label">URL picture (optional)</label>
-                  <input type="url" class="form-control" id="img">
+                  <input type="url" class="form-control" id="img" name="img" pattern="https?://.+"
+                    title="Enter a valid URL starting with http or https" />
                 </div>
+
+                <!-- Company -->
                 <div class="col-md-6 mb-3">
                   <label for="company" class="form-label">Company</label>
-                  <input type="text" class="form-control" id="company">
+                  <input type="text" class="form-control" id="company" name="company" maxlength="50" />
                 </div>
+
+                <!-- Job Title -->
                 <div class="col-md-6 mb-3">
                   <label for="jobtitle" class="form-label">Job title</label>
-                  <input type="text" class="form-control" id="jobtitle">
+                  <input type="text" class="form-control" id="jobtitle" name="jobtitle" maxlength="50" />
                 </div>
+
+                <!-- Address -->
                 <div class="col-md-6 mb-3">
                   <label for="address" class="form-label">Address</label>
-                  <input type="text" class="form-control" id="address">
+                  <input type="text" class="form-control" id="address" name="address" maxlength="100" />
                 </div>
+
+                <!-- Notes -->
                 <div class="col-12 mb-3">
                   <label for="notes" class="form-label">Notes</label>
-                  <textarea class="form-control" id="notes" rows="3"></textarea>
+                  <textarea class="form-control" id="notes" name="notes" rows="3" maxlength="300"></textarea>
                 </div>
               </div>
+
               <div class="text-end">
                 <button type="submit" class="btn btn-primary">Save contact</button>
               </div>
             </form>
+
           </div>
         </div>
       </div>
     </div>
-    <audio src="./img/Duke Dumont - Ocean Drive (Official Music Video).mp3" controls loop>
+    <audio src="./img/Battle Pets (feat. Dj Zapy & Dj Uragun).mp3" controls loop>
       Tu navegador no soporta audio HTML5.
     </audio>
 

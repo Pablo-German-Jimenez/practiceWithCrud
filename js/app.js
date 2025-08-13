@@ -1,5 +1,5 @@
 import Contact from "./contacts.js";
-import { validateAmountCaracters } from "./validations.js";
+import { validateAmountCaracters,validateField,validateEmail,validatePhone,validateURL } from "./validations.js";
 
 const btnModal = document.getElementById("btnModal"); // PRIMERO click en id="btnModal"
 
@@ -23,7 +23,9 @@ const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const agenda = JSON.parse(localStorage.getItem("agenda")) || []; // si no hay nada en local storage, crea un array vacio
 const lastname = document.getElementById("lastname");
 const sectionTableContacts= document.querySelector('.section-table-contacts');
-console.log(sectionTableContacts)
+const emptyState = document.querySelector('.empty-state');
+
+console.log(emptyState)
 
 //add contacts to table
 //if agenda has contacts, draw them in table
@@ -118,7 +120,7 @@ const createContact = (id) => {
       email.value,
       img.value.length !== 0
         ? img.value
-        : `https://i.ytimg.com/vi/C5UIozbSeyM/sddefault.jpg`,
+        : `https://st3.depositphotos.com/2853475/12929/i/450/depositphotos_129296344-stock-photo-b-boy-breakdancing-outdoors.jpg`,
       company.value,
       jobtitle.value,
       address.value,
@@ -273,6 +275,7 @@ const validations = () => {
 //event handlers
 
 btnModal.addEventListener("click", () => {
+  emptyState.classList.add('d-none');
   formContact.reset();
   buildingContact = true; // reset the flag to indicate a new contact is being built
   modal.show();
@@ -282,10 +285,28 @@ const formContact = document.querySelector(".formContact");
 
 formContact.addEventListener("submit", (e) => {
   e.preventDefault();
+    const isNameValid = validateField(name, 2, 50, /^[A-Za-z\s]+$/);
+  const isLastnameValid = validateField(lastname, 3, 50, /^[A-Za-z\s]+$/);
+  const isEmailValid = validateEmail(email);
+  const isPhoneValid = validatePhone(phone);
+  const isImgValid = validateURL(img);
+
+  const allValid = isNameValid && isLastnameValid && isEmailValid && isPhoneValid && isImgValid;
+
+  if (!allValid) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops!",
+      text: "Revisá los campos, hay algo que no está bien.",
+    });
+    return;
+  }
+
+
   if (buildingContact) {
     // if buildingContact is true, create a new contact
     createContact();
-    sectionTableContacts.classList.toggle(`d-none`);
+    sectionTableContacts.classList.toggle`d-none`;
     console.log(`probando probando`)
     
   } else {
