@@ -1,0 +1,61 @@
+
+.footer-animado {
+  position: relative;
+  overflow: hidden;
+  color: #d49c23;
+  font-weight: bold;
+  background: linear-gradient(270deg, #0074d9, #e5e4e2, #0074d9, #e5e4e2);
+  background-size: 400% 400%;
+  animation: gradienteAnimado 8s ease-in-out infinite;
+  border: none;
+  box-shadow: 0 0 10px #0074d955, 0 0 20px #e5e4e288;
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes gradienteAnimado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Destellos animados */
+.footer-animado #destello  {
+  position: absolute;
+  top: 50%;
+  left: -60px;
+  width: 60px;
+  height: 8px;
+  background: linear-gradient(90deg, transparent, #912091 60%, transparent);
+  opacity: 0.7;
+  border-radius: 8px;
+  filter: blur(2px);
+  pointer-events: none;
+  animation: destelloAnimado 2.5s linear infinite;
+}
+
+.footer-animado #destello:nth-child(2) {
+  animation-delay: 1s;
+  top: 60%;
+  left: -80px;
+  width: 80px;
+  opacity: 0.5;
+}
+  
+
+.footer-animado #destello:nth-child(3) {
+  animation-delay: 2s;
+  top: 40%;
+  left: -100px;
+  width: 100px;
+  opacity: 0.4;
+}
+
+@keyframes destelloAnimado {
+  0% { left: -100px; opacity: 0; }
+  10% { opacity: 0.8; }
+  50% { left: 100%; opacity: 0.7; }
+  90% { opacity: 0; }
+  100% { left: 100%; opacity: 0; }
+}
