@@ -25,7 +25,7 @@ const lastname = document.getElementById("lastname");
 const sectionTableContacts= document.querySelector('.section-table-contacts');
 const emptyState = document.querySelector('.empty-state');
 
-console.log(emptyState)
+
 
 //add contacts to table
 //if agenda has contacts, draw them in table
@@ -132,9 +132,6 @@ const createContact = (id) => {
 
     //save to local storage
     saveLocalStorage();
-    //d-none
-
-    //if(sectionTableContacts.classList.contains)
 
     Swal.fire({
       title: "Contact created!",
@@ -274,44 +271,64 @@ const validations = () => {
 
 //event handlers
 
+name.addEventListener('input', () => validateField(name, 2, 50, /^[A-Za-z\s]+$/));
+lastname.addEventListener('input', () => validateField(lastname, 3, 50, /^[A-Za-z\s]+$/));
+email.addEventListener('input', () => validateEmail(email));
+phone.addEventListener('input', () => validatePhone(phone));
+img.addEventListener('input', () => validateURL(img));
+company.addEventListener('input', () => validateField(company, 0, 100));
+jobtitle.addEventListener('input', () => validateField(jobtitle, 0, 100));
+address.addEventListener('input', () => validateField(address, 0, 200));
+notes.addEventListener('input', () => validateField(notes, 0, 500));
+
 btnModal.addEventListener("click", () => {
   emptyState.classList.add('d-none');
   formContact.reset();
   buildingContact = true; // reset the flag to indicate a new contact is being built
   modal.show();
-}); // TERCERO escucha click en btnModal y muestra el contenido del modal tomado desde el dom por id por addContactModalLabel y muestra contenido div
+}); 
 
 const formContact = document.querySelector(".formContact");
 
 formContact.addEventListener("submit", (e) => {
   e.preventDefault();
-    const isNameValid = validateField(name, 2, 50, /^[A-Za-z\s]+$/);
+  
+  // Validar todos los campos
+  const isNameValid = validateField(name, 2, 50, /^[A-Za-z\s]+$/);
   const isLastnameValid = validateField(lastname, 3, 50, /^[A-Za-z\s]+$/);
   const isEmailValid = validateEmail(email);
   const isPhoneValid = validatePhone(phone);
   const isImgValid = validateURL(img);
+  // Validar campos adicionales si es necesario
+  const isCompanyValid = validateField(company, 0, 100); // 0 min porque puede ser opcional
+  const isJobtitleValid = validateField(jobtitle, 0, 100);
+  const isAddressValid = validateField(address, 0, 200);
+  const isNotesValid = validateField(notes, 0, 500);
 
-  const allValid = isNameValid && isLastnameValid && isEmailValid && isPhoneValid && isImgValid;
+  const allValid = isNameValid && isLastnameValid && isEmailValid && 
+                  isPhoneValid && isImgValid && isCompanyValid && 
+                  isJobtitleValid && isAddressValid && isNotesValid;
 
   if (!allValid) {
     Swal.fire({
       icon: "error",
       title: "Oops!",
-      text: "Revisá los campos, hay algo que no está bien.",
+      text: "Por favor, completa todos los campos correctamente.",
     });
     return;
   }
 
-
   if (buildingContact) {
-    // if buildingContact is true, create a new contact
     createContact();
-    sectionTableContacts.classList.toggle`d-none`;
-    console.log(`probando probando`)
-    
+    sectionTableContacts.classList.remove('d-none');
+    emptyState.classList.add('d-none');
   } else {
-    editContact(); // if buildingContact is false, edit the existing contact
+    editContact();
   }
+  
+  // Resetear el formulario y cerrar el modal
+  formContact.reset();
+  modal.hide();
 });
 cargarContactos();
 
